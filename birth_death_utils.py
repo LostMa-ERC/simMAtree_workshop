@@ -6,7 +6,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from networkx.algorithms.traversal.depth_first_search import dfs_tree
 import pickle
-from tqdm import tqdm
+from tqdm.notebook import tqdm
 
 def leaves(graph):
     """
@@ -565,7 +565,7 @@ def generate_yule_pop(LDA, lda, gamma, mu, Nact = 1000, Ninact = 1000, n_init = 
     currentSpecID = n_init
     living = list(range(n_init))
     spec = {n:n for n in range(n_init)}
-    for t in range(Nact):
+    for t in tqdm(range(Nact)):
         if np.random.rand() < LDA:
             currentSpecID +=1
             currentID +=1
