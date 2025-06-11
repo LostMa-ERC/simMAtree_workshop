@@ -6,6 +6,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from networkx.algorithms.traversal.depth_first_search import dfs_tree
 import pickle
+from collections import Counter
 from tqdm.notebook import tqdm
 
 def leaves(graph):
