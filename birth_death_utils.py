@@ -8,7 +8,6 @@ from networkx.algorithms.traversal.depth_first_search import dfs_tree
 import pickle
 from tqdm import tqdm
 
-
 def leaves(graph):
     """
     Returns the terminal leaves of a tree
@@ -535,3 +534,74 @@ def draw_tree_yule(G, filename):
     nx.set_node_attributes(G, {n: color_map[n] for n in G.nodes()}, 'fillcolor')
     g = nx.nx_pydot.to_pydot(G)
     g.write_svg(f'{filename}.svg')
+
+def generate_yule_pop(LDA, lda, gamma, mu, Nact = 1000, Ninact = 1000, n_init = 0):
+    """
+    Returns a list of abundance data for the surviving witnesses of a Yule model simulation
+    
+    Parameters
+    ----------
+    LDA : float 
+        birth rate of independant trees/metatradition
+    lda : float
+        birth rate of nodes (simple copy)
+    gamma :float
+        birth rate of nodes with different species than parent (speciation rate)
+    mu : float
+        death rate of nodes
+    Nact : int
+        duration of the active reproduction phase
+    Ninact : int
+        duration of the decimation (pure death phase)
+    n_init : int
+        number of initialy living independant nodes at t=0
+    
+    Returns
+    -------
+    witness_nb : list of ints 
+        list of the final number of surviving witnesses for each extant works
+    """
+    currentID = n_init
+    currentSpecID = n_init
+    living = list(range(n_init))
+    spec = {n:n for n in range(n_init)}
+    for t in range(Nact):
+        if np.random.rand() < LDA:
+            currentSpecID +=1
+            currentID +=1
+            living.append(currentID)
+            spec[currentID] = currentSpecID
+            
+        births = []
+        deaths = []
+        for current_node in living:
+            r = np.random.rand()
+            if r < lda:
+                currentID += 1
+                births.append(currentID)
+                spec[currentID] = spec[current_node]
+            if lda < r and r < lda + gamma:
+                currentSpecID +=1
+                currentID +=1
+                births.append(currentID)
+                spec[currentID] = currentSpecID
+            if lda + gamma < r and r < (lda + mu + gamma):
+                deaths.append(current_node)
+        
+        for n in births:
+            living.append(n)
+        for n in deaths:
+            living.remove(n)
+
+    deaths = []
+    for node in living:
+        r = np.random.rand()
+        if r > np.exp(- mu * Ninact):
+            deaths.append(node)
+    
+    for node in deaths:
+        living.remove(node)
+            
+    witnesses = [spec[n] for n in living]
+    witness_nb = list(Counter(witnesses).values())
+    return witness_nb
