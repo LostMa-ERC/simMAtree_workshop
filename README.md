@@ -5,8 +5,8 @@ This repository contains the necessary code for the workshop dedicated to using 
 It introduces a new python package, called [simMAtree](https://github.com/LostMa-ERC/simMAtree), currently in development by the LostMA project team. 
 
 The workshop is divided in two parts: 
-  - Simulations using agent-based model (`agent_based_models.ipynb` file, [colab link](https://colab.research.google.com/github/LostMa-ERC/simMAtree_workshop/blob/main/agent_based_models.ipynb))
-  - Inference using Simulation Based Inference (`simmatree.ipynb` file, [colab link](https://colab.research.google.com/github/LostMa-ERC/simMAtree_workshop/blob/main/simmatree.ipynb))
+  - Simulations using agent-based model (`agent_based_models.ipynb` file, [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/LostMa-ERC/simMAtree_workshop/blob/main/agent_based_models.ipynb))
+  - Inference using Simulation Based Inference (`simmatree.ipynb` file, [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/LostMa-ERC/simMAtree_workshop/blob/main/simmatree.ipynb))
 
 ## Acknowledgements
 
